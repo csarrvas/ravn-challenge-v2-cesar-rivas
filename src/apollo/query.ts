@@ -1,16 +1,13 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  query allPeople {
-    allPeople(first: 5) {
+  query allPeople($first: Int, $after: String) {
+    allPeople(first: $first, after: $after) {
       pageInfo {
         hasNextPage
-        hasPreviousPage
+        endCursor
       }
       totalCount
-      edges {
-        cursor
-      }
       people {
         id
         name
@@ -18,6 +15,9 @@ export default gql`
         hairColor
         skinColor
         birthYear
+        gender
+        height
+        mass
         species {
           name
         }
