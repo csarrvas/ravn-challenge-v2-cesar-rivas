@@ -72,7 +72,7 @@ const Content = (): React.ReactElement => {
     dispatch(setPerson(data.person));
   }
 
-  if (error) {
+  if (!personSelected && error) {
     return <Redirect to="/" />;
   }
 
