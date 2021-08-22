@@ -1,7 +1,15 @@
-import React from 'react';
-import { useQuery } from '@apollo/client';
-import allPeople from 'apollo/query';
+import React, { useEffect } from 'react';
+import { useLazyQuery } from '@apollo/client';
+import { allPeople } from 'apollo/queries';
 import styled from 'styled-components';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import {
+  allPeopleSelector,
+  updateAllPeopleList,
+  setLoading,
+  setError,
+} from 'redux/allPeopleSlice';
+import { AllPeopleQuery } from 'types/allPeople';
 import Content from './Content';
 import Header from './Header';
 import Sidebar from './Sidebar';
@@ -14,9 +22,32 @@ const LayoutStyled = styled.div`
 `;
 
 const Layout = (): React.ReactElement => {
-  const { data } = useQuery(allPeople);
-  // eslint-disable-next-line no-console
-  console.log(data);
+  const dispatch = useAppDispatch();
+  const { pageInfo, error } = useAppSelector(allPeopleSelector);
+
+  const [getMorePeople, { data, error: errorState }] =
+    useLazyQuery<AllPeopleQuery>(allPeople);
+
+  useEffect(() => {
+    if (!errorState && (pageInfo?.hasNextPage || !pageInfo)) {
+      dispatch(setLoading());
+      getMorePeople({
+        variables: {
+          first: 5,
+          after: pageInfo?.endCursor,
+        },
+      });
+    }
+  }, [pageInfo?.endCursor]);
+
+  if (data && pageInfo?.endCursor !== data.allPeople.pageInfo?.endCursor) {
+    dispatch(updateAllPeopleList(data.allPeople));
+  }
+
+  if (error && !errorState) {
+    dispatch(setError());
+  }
+
   return (
     <LayoutStyled>
       <Header />
