@@ -18,6 +18,7 @@ const HeaderStyled = styled.header`
   h2 {
     margin: 0;
     ${headerText()}
+    cursor: pointer;
   }
 `;
 
