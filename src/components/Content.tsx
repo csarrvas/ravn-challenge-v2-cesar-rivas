@@ -67,7 +67,7 @@ const Content = (): React.ReactElement => (
       <Table>
         <Title>Vehicles</Title>
         {data.people[0].vehicleConnection.vehicles.map(vehicle => (
-          <Row>
+          <Row key={vehicle.id}>
             <span>{vehicle.name}</span>
           </Row>
         ))}

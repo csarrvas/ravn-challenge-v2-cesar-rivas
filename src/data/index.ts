@@ -39,9 +39,11 @@ export default {
       vehicleConnection: {
         vehicles: [
           {
+            id: 'dmVoaWNsZXM6MTQ=',
             name: 'Snowspeeder',
           },
           {
+            id: 'dmVoaWNsZXM6MzA=',
             name: 'Imperial Speeder Bike',
           },
         ],
@@ -122,6 +124,7 @@ export default {
       vehicleConnection: {
         vehicles: [
           {
+            id: 'dmVoaWNsZXM6MzA=',
             name: 'Imperial Speeder Bike',
           },
         ],

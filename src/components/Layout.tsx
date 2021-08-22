@@ -1,4 +1,6 @@
 import React from 'react';
+import { useQuery } from '@apollo/client';
+import allPeople from 'apollo/query';
 import styled from 'styled-components';
 import Content from './Content';
 import Header from './Header';
@@ -11,12 +13,17 @@ const LayoutStyled = styled.div`
   height: 100%;
 `;
 
-const Layout = (): React.ReactElement => (
-  <LayoutStyled>
-    <Header />
-    <Sidebar />
-    <Content />
-  </LayoutStyled>
-);
+const Layout = (): React.ReactElement => {
+  const { data } = useQuery(allPeople);
+  // eslint-disable-next-line no-console
+  console.log(data);
+  return (
+    <LayoutStyled>
+      <Header />
+      <Sidebar />
+      <Content />
+    </LayoutStyled>
+  );
+};
 
 export default Layout;
