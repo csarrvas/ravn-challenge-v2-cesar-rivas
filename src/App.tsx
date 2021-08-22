@@ -6,7 +6,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
-import client from 'config/apollo';
+import client from 'apollo';
 import ROUTES from 'config/routes';
 import Layout from 'components/Layout';
 
