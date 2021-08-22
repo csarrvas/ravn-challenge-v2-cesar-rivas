@@ -5,7 +5,7 @@ import { person } from 'apollo/queries';
 import { defaultBold, lowEmphasisBold } from 'styles/mixins/textStyles';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { allPeopleSelector, setPerson } from 'redux/allPeopleSlice';
-import { useHistory, useParams } from 'react-router-dom';
+import { Redirect, useParams } from 'react-router-dom';
 import { PersonQuery } from 'types/allPeople';
 
 const Main = styled.main`
@@ -53,7 +53,6 @@ type Params = {
 
 const Content = (): React.ReactElement => {
   const dispatch = useAppDispatch();
-  const history = useHistory();
   const { id } = useParams<Params>();
   const { personSelected } = useAppSelector(allPeopleSelector);
 
@@ -74,7 +73,7 @@ const Content = (): React.ReactElement => {
   }
 
   if (error) {
-    history.push('/');
+    return <Redirect to="/" />;
   }
 
   if (!personSelected) {
