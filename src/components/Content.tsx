@@ -68,7 +68,7 @@ const Content = (): React.ReactElement => {
     }
   }, []);
 
-  if (!personSelected && data) {
+  if (!personSelected && data && id) {
     dispatch(setPerson(data.person));
   }
 
