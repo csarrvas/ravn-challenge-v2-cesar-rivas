@@ -33,6 +33,9 @@ export const allPeopleSlice = createSlice({
     setPerson: (state, { payload }: PayloadAction<Person>) => {
       state.personSelected = payload;
     },
+    cleanPerson: state => {
+      state.personSelected = null;
+    },
     setError: state => {
       state.loading = false;
       state.error = 'Failed to Load Data';
@@ -40,8 +43,13 @@ export const allPeopleSlice = createSlice({
   },
 });
 
-export const { setLoading, updateAllPeopleList, setPerson, setError } =
-  allPeopleSlice.actions;
+export const {
+  setLoading,
+  updateAllPeopleList,
+  setPerson,
+  cleanPerson,
+  setError,
+} = allPeopleSlice.actions;
 
 export const allPeopleSelector = ({ allPeople }: RootState) => allPeople;
 
