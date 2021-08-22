@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import data from 'data';
+import { useLazyQuery } from '@apollo/client';
+import { person } from 'apollo/queries';
 import { defaultBold, lowEmphasisBold } from 'styles/mixins/textStyles';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { allPeopleSelector, setPerson } from 'redux/allPeopleSlice';
+import { useHistory, useParams } from 'react-router-dom';
+import { PersonQuery } from 'types/allPeople';
 
 const Main = styled.main`
   padding: 3.2rem 10rem;
@@ -42,38 +47,95 @@ const Row = styled.div`
   }
 `;
 
-const Content = (): React.ReactElement => (
-  <Main>
-    <Table>
-      <Title>General Information</Title>
-      <Row>
-        <span>Eye Color</span>
-        <span>{data.people[0].eyeColor}</span>
-      </Row>
-      <Row>
-        <span>Hair Color</span>
-        <span>{data.people[0].hairColor}</span>
-      </Row>
-      <Row>
-        <span>Skin Color</span>
-        <span>{data.people[0].skinColor}</span>
-      </Row>
-      <Row>
-        <span>Birth Year</span>
-        <span>{data.people[0].birthYear}</span>
-      </Row>
-    </Table>
-    {!!data.people[0].vehicleConnection.vehicles.length && (
+type Params = {
+  id: string;
+};
+
+const Content = (): React.ReactElement => {
+  const dispatch = useAppDispatch();
+  const history = useHistory();
+  const { id } = useParams<Params>();
+  const { personSelected } = useAppSelector(allPeopleSelector);
+
+  const [getPerson, { data, error }] = useLazyQuery<PersonQuery>(person);
+
+  useEffect(() => {
+    if (!personSelected && id) {
+      getPerson({
+        variables: {
+          id,
+        },
+      });
+    }
+  }, []);
+
+  if (!personSelected && data) {
+    dispatch(setPerson(data.person));
+  }
+
+  if (error) {
+    history.push('/');
+  }
+
+  if (!personSelected) {
+    return <></>;
+  }
+
+  const {
+    eyeColor,
+    hairColor,
+    skinColor,
+    birthYear,
+    gender,
+    height,
+    mass,
+    vehicleConnection,
+  } = personSelected;
+  return (
+    <Main>
       <Table>
-        <Title>Vehicles</Title>
-        {data.people[0].vehicleConnection.vehicles.map(vehicle => (
-          <Row key={vehicle.id}>
-            <span>{vehicle.name}</span>
-          </Row>
-        ))}
+        <Title>General Information</Title>
+        <Row>
+          <span>Eye Color</span>
+          <span>{eyeColor}</span>
+        </Row>
+        <Row>
+          <span>Hair Color</span>
+          <span>{hairColor}</span>
+        </Row>
+        <Row>
+          <span>Skin Color</span>
+          <span>{skinColor}</span>
+        </Row>
+        <Row>
+          <span>Birth Year</span>
+          <span>{birthYear}</span>
+        </Row>
+        <Row>
+          <span>Gender</span>
+          <span>{gender}</span>
+        </Row>
+        <Row>
+          <span>Height</span>
+          <span>{height} cm</span>
+        </Row>
+        <Row>
+          <span>Mass</span>
+          <span>{mass} kg</span>
+        </Row>
       </Table>
-    )}
-  </Main>
-);
+      {!!vehicleConnection.vehicles.length && (
+        <Table>
+          <Title>Vehicles</Title>
+          {vehicleConnection.vehicles.map(vehicle => (
+            <Row key={vehicle.id}>
+              <span>{vehicle.name}</span>
+            </Row>
+          ))}
+        </Table>
+      )}
+    </Main>
+  );
+};
 
 export default Content;
