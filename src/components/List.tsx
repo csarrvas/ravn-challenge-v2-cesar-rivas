@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { allPeopleSelector, setPerson } from 'redux/allPeopleSlice';
 import { Person } from 'types/allPeople';
 import buttonize from 'utils/buttonize';
+import Spinner from './Loading';
 
 const Ul = styled.ul`
   padding-left: 0;
@@ -80,7 +81,7 @@ const List = (): React.ReactElement => {
           </li>
         ))}
       </Ul>
-      {loading && 'spinner'}
+      {loading && <Spinner />}
       {error && <Error>{error}</Error>}
     </>
   );
