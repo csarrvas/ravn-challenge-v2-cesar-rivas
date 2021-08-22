@@ -7,6 +7,10 @@ type Species = {
   name: string;
 };
 
+type Homeworld = {
+  name: string;
+};
+
 type Vehicle = {
   id: string;
   name: string;
@@ -23,18 +27,27 @@ export type Person = {
   height: number;
   mass: number;
   species: Species | null;
+  homeworld: Homeworld;
   vehicleConnection: {
     vehicles: Vehicle[];
   };
 };
 
-export type AllPeopleQuery = {
+export type AllPeopleInfo = {
   pageInfo: PageInfo | null;
   totalCount: number;
   people: Person[];
 };
 
-export interface AllPeopleState extends AllPeopleQuery {
+export type AllPeopleQuery = {
+  allPeople: AllPeopleInfo;
+};
+
+export type PersonQuery = {
+  person: Person;
+};
+
+export interface AllPeopleState extends AllPeopleInfo {
   personSelected: Person | null;
   loading: boolean;
   error: string | null;
