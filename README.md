@@ -25,9 +25,9 @@ Web app that allows to browse the Star Wars GraphQL API
 
 ## Application working
 
-![App Working](https://github.com/csarrvas/test/blob/main/public/appWorking.gif?raw=true)
+![App Working](https://github.com/csarrvas/ravn-challenge-v2-cesar-rivas/blob/main/public/appWorking.gif?raw=true)
 
-![App Working](https://github.com/csarrvas/test/blob/main/public/appWorking.png?raw=true)
+![App Working](https://github.com/csarrvas/ravn-challenge-v2-cesar-rivas/blob/main/public/appWorking.png?raw=true)
 
 ## Additional Information
 
