@@ -31,7 +31,8 @@ Web app that allows to browse the Star Wars GraphQL API
 
 ## Additional Information
 
-Also you need to have the `REACT_APP_BACKEND_ENDPOINT` in your `.env` file.\
+Also you need to have the `REACT_APP_BACKEND_ENDPOINT` key in your `.env` file.\
+Open the app deployed [https://ravn-challenge-v2-cesar-rivas.netlify.app/](https://ravn-challenge-v2-cesar-rivas.netlify.app/) to view it in the browser.
 
 ## Technologies used
 
