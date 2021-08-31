@@ -23,9 +23,9 @@ const LayoutStyled = styled.div`
 
 const Layout = (): React.ReactElement => {
   const dispatch = useAppDispatch();
-  const { pageInfo, error } = useAppSelector(allPeopleSelector);
+  const { pageInfo, error: errorState } = useAppSelector(allPeopleSelector);
 
-  const [getMorePeople, { data, error: errorState }] =
+  const [getMorePeople, { data, error }] =
     useLazyQuery<AllPeopleQuery>(allPeople);
 
   useEffect(() => {
